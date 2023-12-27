@@ -1,10 +1,6 @@
 package main
 
 import (
-	tcpscanner "PortScanner/pkg/scanner/tcp"
-	tcpstatic "PortScanner/pkg/scanner/tcpstatic"
-	PortScanner "PortScanner/pkg/scanner/udpnew"
-	udpstatic "PortScanner/pkg/scanner/udpstaticnew"
 	"bufio"
 	"encoding/csv"
 	"encoding/json"
@@ -12,6 +8,10 @@ import (
 	"fmt"
 	"github.com/TwiN/go-color"
 	"github.com/briandowns/spinner"
+	tcpscanner "github.com/destan0098/SimplePortScanner/pkg/scanner/tcp"
+	tcpstatic "github.com/destan0098/SimplePortScanner/pkg/scanner/tcpstatic"
+	PortScanner "github.com/destan0098/SimplePortScanner/pkg/scanner/udpnew"
+	udpstatic "github.com/destan0098/SimplePortScanner/pkg/scanner/udpstaticnew"
 	"github.com/urfave/cli/v2"
 	"log"
 	"net"

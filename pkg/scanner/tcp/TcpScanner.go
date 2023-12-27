@@ -1,9 +1,9 @@
 package PortScanner
 
 import (
-	tcpports "PortScanner/internal/TcpPorts"
 	"fmt"
 	"github.com/TwiN/go-color"
+	tcpports "github.com/destan0098/SimplePortScanner/internal/TcpPorts"
 	"io/ioutil"
 	"net"
 	"strconv"
