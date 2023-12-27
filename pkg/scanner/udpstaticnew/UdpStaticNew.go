@@ -86,7 +86,12 @@ func UdpStaticNew(ip string, timeout int) (map[string][]tcpscanner.PortInfo, str
 	for _, probe := range probes.Probes {
 		//fmt.Println(ip)
 		wg.Add(1)
-		go UdpProbe(ip, probe.Name, probe.Data, probe.Port, timeout, &wg)
+		for _, port := range probe.Port {
+			for _, payload := range probe.Payloads {
+				go UdpProbe(ip, probe.Name, payload, port, timeout, &wg)
+			}
+		}
+		//go UdpProbe(ip, probe.Name, probe.Data, probe.Port, timeout, &wg)
 
 	}
 	wg.Wait()
