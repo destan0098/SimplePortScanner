@@ -1,0 +1,12 @@
+PORT,Status,Service
+80,open,HTTP World Wide Web HTTP
+443,open,HTTP HTTP protocol over TLS/SSL
+2052,open,HTTP 
+2087,open,HTTP 
+2096,open,HTTP NBX DIR
+2083,open,HTTP 
+2095,open,HTTP NBX SER
+2082,open,HTTP 
+2053,open,HTTP Kerberos de-multiplexer
+2086,open,HTTP 
+8880,open,HTTP CDDBP

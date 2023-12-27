@@ -1,0 +1,59 @@
+{
+ "185.143.233.51": [
+  {
+   "Port": "80",
+   "Status": "open",
+   "Service": "HTTP World Wide Web HTTP"
+  },
+  {
+   "Port": "443",
+   "Status": "open",
+   "Service": "HTTP HTTP protocol over TLS/SSL"
+  },
+  {
+   "Port": "2052",
+   "Status": "open",
+   "Service": "HTTP "
+  },
+  {
+   "Port": "2087",
+   "Status": "open",
+   "Service": "HTTP "
+  },
+  {
+   "Port": "2096",
+   "Status": "open",
+   "Service": "HTTP NBX DIR"
+  },
+  {
+   "Port": "2083",
+   "Status": "open",
+   "Service": "HTTP "
+  },
+  {
+   "Port": "2095",
+   "Status": "open",
+   "Service": "HTTP NBX SER"
+  },
+  {
+   "Port": "2082",
+   "Status": "open",
+   "Service": "HTTP "
+  },
+  {
+   "Port": "2053",
+   "Status": "open",
+   "Service": "HTTP Kerberos de-multiplexer"
+  },
+  {
+   "Port": "2086",
+   "Status": "open",
+   "Service": "HTTP "
+  },
+  {
+   "Port": "8880",
+   "Status": "open",
+   "Service": "HTTP CDDBP"
+  }
+ ]
+}
