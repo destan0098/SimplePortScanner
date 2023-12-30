@@ -1,10 +1,10 @@
 package PortScanner
 
 import (
-	tcpport "PortScanner/internal/TcpPorts"
-	tcpscanner "PortScanner/pkg/scanner/tcp"
 	"fmt"
 	"github.com/TwiN/go-color"
+	tcpport "github.com/destan0098/SimplePortScanner/internal/TcpPorts"
+	tcpscanner "github.com/destan0098/SimplePortScanner/pkg/scanner/tcp"
 	"net"
 	"strconv"
 	"sync"

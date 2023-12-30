@@ -1,9 +1,9 @@
 package PortScanner
 
 import (
-	tcpscanner "PortScanner/pkg/scanner/tcp"
 	"fmt"
 	"github.com/TwiN/go-color"
+	tcpscanner "github.com/destan0098/SimplePortScanner/pkg/scanner/tcp"
 	"net"
 	"regexp"
 	"strings"

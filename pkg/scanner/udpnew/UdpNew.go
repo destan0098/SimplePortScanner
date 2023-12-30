@@ -1,12 +1,12 @@
 package PortScanner
 
 import (
-	"PortScanner/internal/probes"
-	tcpscanner "PortScanner/pkg/scanner/tcp"
 	"bufio"
 	"encoding/hex"
 	"fmt"
 	"github.com/TwiN/go-color"
+	"github.com/destan0098/SimplePortScanner/internal/probes"
+	tcpscanner "github.com/destan0098/SimplePortScanner/pkg/scanner/tcp"
 	"log"
 	"net"
 	"strings"
