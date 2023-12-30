@@ -1,6 +1,11 @@
 package main
 
 import (
+	tcpscanner "PortScanner/pkg/scanner/tcp"
+	tcpDynamic "PortScanner/pkg/scanner/tcpDynamic"
+	tcpstatic "PortScanner/pkg/scanner/tcpstatic"
+	PortScanner "PortScanner/pkg/scanner/udpnew"
+	udpstatic "PortScanner/pkg/scanner/udpstaticnew"
 	"bufio"
 	"encoding/csv"
 	"encoding/json"
@@ -8,10 +13,6 @@ import (
 	"fmt"
 	"github.com/TwiN/go-color"
 	"github.com/briandowns/spinner"
-	tcpscanner "github.com/destan0098/SimplePortScanner/pkg/scanner/tcp"
-	tcpstatic "github.com/destan0098/SimplePortScanner/pkg/scanner/tcpstatic"
-	PortScanner "github.com/destan0098/SimplePortScanner/pkg/scanner/udpnew"
-	udpstatic "github.com/destan0098/SimplePortScanner/pkg/scanner/udpstaticnew"
 	"github.com/urfave/cli/v2"
 	"log"
 	"net"
@@ -23,7 +24,7 @@ import (
 	"time"
 )
 
-var outputs, counterPlus int
+var outputs int
 var worker, timeout int
 var method, statics bool
 
@@ -82,11 +83,11 @@ $$ |      \$$$$$$  |$$ |        \$$$$  |      \$$$$$$  |\$$$$$$$\ \$$$$$$$ |$$ |
 				Usage:   "Enter just from a pipeline",
 			},
 			&cli.BoolFlag{
-				Name:        "method",
+				Name:        "detect",
 				Aliases:     []string{"i"},
 				Value:       false,
 				Destination: &method,
-				Usage:       "If enter this scan with Syn method",
+				Usage:       "If You need Detect Service",
 			},
 			&cli.BoolFlag{
 				Name:        "static",
@@ -154,6 +155,7 @@ $$ |      \$$$$$$  |$$ |        \$$$$  |      \$$$$$$  |\$$$$$$$\ \$$$$$$$ |$$ |
 	if err := app.Run(os.Args); err != nil {
 		log.Fatal(err)
 	}
+
 }
 
 // readIPS read ip list from input file
@@ -238,9 +240,14 @@ func handlePortRange(ip, portArray string) {
 					<-workerChan
 					wg.Done()
 				}()
-
+				if statics && (proto == "tcp" || proto == "TCP") {
+					fmt.Println("sss")
+					handleSinglePort(ip, "1")
+					return
+				}
 				handleSinglePort(ip, strconv.Itoa(j))
 			}(i)
+
 		}
 
 		wg.Wait()
@@ -249,39 +256,38 @@ func handlePortRange(ip, portArray string) {
 
 var res = make(map[string][]tcpscanner.PortInfo)
 var ipName string
-var counter int
+
+//var counter int
 
 // ///////////  handle single port
 func handleSinglePort(ip, port string) {
 
 	ipAdd := addPortToIP(ip, port)
 	if proto == "tcp" || proto == "TCP" {
+		if method {
 
-		if method == false {
 			if statics {
-				res, ipName, counter = tcpstatic.TcpScannerNewStatic(ipAdd, ip, timeout)
+				res, ipName, _ = tcpstatic.TcpScannerNewStatic(ip, timeout)
+				return
 			} else {
-				res, ipName, counter = tcpscanner.TcpScannerNew(ipAdd, ip, timeout)
+				res, ipName, _ = tcpDynamic.Tcpscannersingle(ipAdd, ip, timeout)
 			}
-
 		} else {
-			if statics {
-				res, ipName, counter = tcpstatic.SynScanStatic(ipAdd, ip, timeout)
-			} else {
-				res, ipName, counter = tcpscanner.SynScan(ipAdd, ip, timeout)
-			}
+			tcpscanner.Tcpscannersingle(ipAdd, ip, timeout)
 		}
 	} else if proto == "udp" || proto == "UDP" {
 		if statics {
-			res, ipName, counter, _ = udpstatic.UdpStaticNew(ip, timeout)
+			res, ipName, _, _ = udpstatic.UdpStaticNew(ip, timeout)
+
 			return
 		} else {
-			res, ipName, counter = PortScanner.UdpScannerNew(ipAdd, ip, timeout)
+			res, ipName, _ = PortScanner.UdpScannerNew(ipAdd, ip, timeout)
 		}
 	} else {
 		fmt.Println(color.Colorize(color.Red, "[-] Please Select TCP or UDP Protocol "))
 	}
-	counterPlus = counter
+
+	//counterPlus = counter
 	//	fmt.Println(res)
 
 	writeResults(res, ipName)
@@ -341,7 +347,7 @@ func withList(inputFile, portArray string) {
 
 	}
 
-	fmt.Printf(color.Colorize(color.Green, "[+] Find %d Open Port.\n"), counterPlus)
+	//	fmt.Printf(color.Colorize(color.Green, "[+] Find %d Open Port.\n"), counterPlus)
 }
 
 // read ips from pipeline
@@ -369,7 +375,7 @@ func withPipe(portArray string) {
 			}
 		}(ip)
 		wg.Wait()
-		fmt.Printf(color.Colorize(color.Green, "[+] Find %d Open Port.\n"), counterPlus)
+		//	fmt.Printf(color.Colorize(color.Green, "[+] Find %d Open Port.\n"), counterPlus)
 
 	}
 
@@ -390,7 +396,7 @@ func withName(ip, portarray string) {
 	default:
 		handlePorts(ip, portarray)
 	}
-	fmt.Printf(color.Colorize(color.Green, "[+] Find %d Open Port .\n"), counterPlus)
+	//fmt.Printf(color.Colorize(color.Green, "[+] Find %d Open Port .\n"), counterPlus)
 
 }
 
@@ -420,7 +426,7 @@ func withCIDR(ip, portarray string) {
 		}
 
 	}
-	fmt.Printf(color.Colorize(color.Green, "[+] Find %d Open Port .\n"), counterPlus)
+	//fmt.Printf(color.Colorize(color.Green, "[+] Find %d Open Port .\n"), counterPlus)
 
 }
 

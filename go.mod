@@ -1,4 +1,4 @@
-module github.com/destan0098/SimplePortScanner
+module PortScanner
 
 go 1.20
 
