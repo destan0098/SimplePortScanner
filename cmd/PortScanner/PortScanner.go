@@ -191,13 +191,17 @@ func addPortToIP(ip, port string) string {
 
 // handle ports
 func handlePorts(ip, portArray string) {
-	switch {
-	case strings.Contains(portArray, ","):
-		handleMultiplePorts(ip, portArray)
-	case strings.Contains(portArray, "-"):
-		handlePortRange(ip, portArray)
-	default:
-		handleSinglePort(ip, portArray)
+	if statics {
+		handleSinglePort(ip, "0")
+	} else {
+		switch {
+		case strings.Contains(portArray, ","):
+			handleMultiplePorts(ip, portArray)
+		case strings.Contains(portArray, "-"):
+			handlePortRange(ip, portArray)
+		default:
+			handleSinglePort(ip, portArray)
+		}
 	}
 }
 
